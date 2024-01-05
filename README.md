@@ -1,13 +1,4 @@
 # List Orders
-Este código em Go foi desenvolvido para demonstrar a utilização de duas APIs diferentes para obter informações de endereços a partir de um CEP. O programa compara o tempo de resposta das APIs ViaCEP e BrasilAPI, exibindo os dados da API que responde mais rapidamente dentro de um prazo de 1 segundo.
-
-## Estrutura do Código
-O código consiste em um arquivo principal, main.go, que contém a lógica principal do programa. Há também a definição de uma estrutura Address para armazenar os dados do endereço e duas funções principais: main() e getAddress().
-
-- main(): Inicia o programa, define o CEP a ser consultado, inicia duas goroutines para chamar as APIs simultaneamente, aguarda a conclusão das goroutines e exibe os resultados.
-
-- getAddress(): Realiza uma solicitação HTTP para uma API específica, decodifica os dados JSON da resposta e envia os resultados por meio de um canal.
-
 
 ## Como Rodar o Código
 Clone o repositório:
