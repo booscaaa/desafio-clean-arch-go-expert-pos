@@ -3,18 +3,23 @@ package service
 import (
 	"context"
 
-	"github.com/devfullcycle/20-CleanArch/internal/infra/grpc/pb"
-	"github.com/devfullcycle/20-CleanArch/internal/usecase"
+	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/internal/infra/grpc/pb"
+	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/internal/usecase"
 )
 
 type OrderService struct {
 	pb.UnimplementedOrderServiceServer
 	CreateOrderUseCase usecase.CreateOrderUseCase
+	ListOrderUseCase   usecase.ListOrderUseCase
 }
 
-func NewOrderService(createOrderUseCase usecase.CreateOrderUseCase) *OrderService {
+func NewOrderService(
+	createOrderUseCase usecase.CreateOrderUseCase,
+	listOrderUseCase usecase.ListOrderUseCase,
+) *OrderService {
 	return &OrderService{
 		CreateOrderUseCase: createOrderUseCase,
+		ListOrderUseCase:   listOrderUseCase,
 	}
 }
 
@@ -34,4 +39,23 @@ func (s *OrderService) CreateOrder(ctx context.Context, in *pb.CreateOrderReques
 		Tax:        float32(output.Tax),
 		FinalPrice: float32(output.FinalPrice),
 	}, nil
+}
+
+func (s *OrderService) ListOrders(ctx context.Context, in *pb.ListOrdersRequest) (*pb.ListOrdersResponse, error) {
+	output, err := s.ListOrderUseCase.Execute()
+	if err != nil {
+		return nil, err
+	}
+
+	pbOrders := make([]*pb.Order, len(output))
+	for i, order := range output {
+		pbOrders[i] = &pb.Order{
+			Id:         order.ID,
+			Price:      float32(order.Price),
+			Tax:        float32(order.Tax),
+			FinalPrice: float32(order.FinalPrice),
+		}
+	}
+
+	return &pb.ListOrdersResponse{Orders: pbOrders}, nil
 }
