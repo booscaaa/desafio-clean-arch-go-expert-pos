@@ -58,7 +58,7 @@ Content-Type: application/json
 
 ### GRAPHQL
 
-Acesse no seu navegador a rota http://localhost:8000
+Acesse no seu navegador a rota http://localhost:8080
 
 E execute as seguintes queries para validação
 
