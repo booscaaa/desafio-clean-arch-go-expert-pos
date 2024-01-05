@@ -4,20 +4,20 @@ import (
 	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/internal/entity"
 )
 
-type FetchOrderUseCase struct {
+type ListOrderUseCase struct {
 	OrderRepository entity.OrderRepositoryInterface
 }
 
-func NewFetchOrderUseCase(
+func NewListOrderUseCase(
 	OrderRepository entity.OrderRepositoryInterface,
-) *FetchOrderUseCase {
-	return &FetchOrderUseCase{
+) *ListOrderUseCase {
+	return &ListOrderUseCase{
 		OrderRepository: OrderRepository,
 	}
 }
 
-func (c *FetchOrderUseCase) Execute() ([]entity.Order, error) {
-	orders, err := c.OrderRepository.Fetch()
+func (c *ListOrderUseCase) Execute() ([]entity.Order, error) {
+	orders, err := c.OrderRepository.List()
 
 	if err != nil {
 		return nil, err
