@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/devfullcycle/20-CleanArch/internal/entity"
-	"github.com/devfullcycle/20-CleanArch/pkg/events"
+	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/internal/entity"
+	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/pkg/events"
 )
 
 type OrderInputDTO struct {
