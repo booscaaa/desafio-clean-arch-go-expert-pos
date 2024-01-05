@@ -3,7 +3,7 @@ package database
 import (
 	"database/sql"
 
-	"github.com/devfullcycle/20-CleanArch/internal/entity"
+	"github.com/booscaaa/desafio-clean-arch-go-expert-pos/internal/entity"
 )
 
 type OrderRepository struct {
@@ -33,4 +33,40 @@ func (r *OrderRepository) GetTotal() (int, error) {
 		return 0, err
 	}
 	return total, nil
+}
+
+func (r *OrderRepository) List() ([]entity.Order, error) {
+	var orders []entity.Order
+
+	stmt, err := r.Db.Prepare("SELECT * FROM orders")
+	if err != nil {
+		return nil, err
+	}
+	defer stmt.Close()
+
+	rows, err := stmt.Query()
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var order entity.Order
+		err := rows.Scan(
+			&order.ID,
+			&order.Price,
+			&order.Tax,
+			&order.FinalPrice,
+		)
+		if err != nil {
+			return nil, err
+		}
+		orders = append(orders, order)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return orders, nil
 }
